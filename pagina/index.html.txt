@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Farmacia Vida Sana</title>
+<meta name="description" content="Farmacia Vida Sana: medicamentos, atención farmacéutica y servicios de salud para tu familia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pine: #123b34;
+    --pine-soft: #2d5a52;
+    --leaf: #1f8a70;
+    --mint: #d9efe7;
+    --paper: #f6faf8;
+    --white: #ffffff;
+    --amber: #f2b84b;
+    --line: #cfe3db;
+    --head: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+    --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: var(--body);
+    color: var(--pine);
+    background: var(--paper);
+    line-height: 1.6;
+    font-size: 17px;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: min(1080px, 92%); margin: 0 auto; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(246, 250, 248, .94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 0; flex-wrap: wrap; }
+  .brand { font-family: var(--head); font-weight: 700; font-size: 1.3rem; text-decoration: none; display: flex; align-items: center; gap: .55rem; }
+  .brand-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--leaf); position: relative; flex: none; }
+  .brand-mark::before, .brand-mark::after { content: ""; position: absolute; background: var(--white); border-radius: 2px; }
+  .brand-mark::before { width: 16px; height: 5px; left: 7px; top: 12.5px; }
+  .brand-mark::after { width: 5px; height: 16px; left: 12.5px; top: 7px; }
+  nav ul { list-style: none; display: flex; gap: .3rem; flex-wrap: wrap; }
+  nav a { display: block; padding: .45rem .9rem; border-radius: 999px; text-decoration: none; font-weight: 500; font-size: .98rem; }
+  nav a:hover { background: var(--mint); }
+
+  /* Hero */
+  .hero { padding: 4.5rem 0 4rem; }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 3rem; align-items: center; }
+  h1 { font-family: var(--head); font-weight: 700; font-size: clamp(2.3rem, 5.4vw, 3.9rem); line-height: 1.04; letter-spacing: -.02em; }
+  .hero p { margin-top: 1.3rem; max-width: 34em; color: var(--pine-soft); font-size: 1.1rem; }
+  .actions { margin-top: 2rem; display: flex; gap: .8rem; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: .85rem 1.5rem; border-radius: 999px; font-weight: 600; text-decoration: none; border: 2px solid var(--pine); cursor: pointer; font-family: var(--body); font-size: 1rem; }
+  .btn-main { background: var(--pine); color: var(--white); }
+  .btn-main:hover { background: var(--leaf); border-color: var(--leaf); }
+  .btn-alt { background: transparent; }
+  .btn-alt:hover { background: var(--mint); }
+
+  /* La cápsula: elemento memorable */
+  .capsule-stage { display: grid; place-items: center; min-height: 320px; }
+  .capsule {
+    width: min(100%, 360px); aspect-ratio: 2.2 / 1; border-radius: 999px;
+    display: flex; overflow: hidden; transform: rotate(-14deg);
+    box-shadow: 0 24px 40px -18px rgba(18, 59, 52, .45);
+    border: 3px solid var(--pine);
+  }
+  .capsule .half { flex: 1; display: grid; place-items: center; font-family: var(--head); font-weight: 700; font-size: clamp(1rem, 2.6vw, 1.5rem); text-align: center; line-height: 1.15; padding: 0 .6rem; }
+  .capsule .a { background: var(--leaf); color: var(--white); }
+  .capsule .b { background: var(--mint); color: var(--pine); border-left: 3px solid var(--pine); }
+
+  /* Secciones */
+  section { padding: 4.5rem 0; }
+  .alt { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  h2 { font-family: var(--head); font-size: clamp(1.8rem, 3.6vw, 2.5rem); line-height: 1.1; letter-spacing: -.01em; margin-bottom: 1rem; }
+  .lead { color: var(--pine-soft); max-width: 40em; }
+
+  /* Nosotros */
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .about p + p { margin-top: 1rem; }
+  .values { list-style: none; display: grid; gap: 1rem; }
+  .values li { padding: 1.1rem 1.3rem; border-left: 5px solid var(--leaf); background: var(--mint); border-radius: 0 14px 14px 0; }
+  .values strong { display: block; font-family: var(--head); font-size: 1.1rem; }
+
+  /* Servicios */
+  .services { margin-top: 2.2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.1rem; }
+  .service { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 1.5rem; }
+  .service:nth-child(even) { background: var(--mint); border-color: transparent; }
+  .service h3 { font-family: var(--head); font-size: 1.2rem; margin-bottom: .4rem; }
+  .service p { color: var(--pine-soft); font-size: .98rem; }
+
+  /* Tipo empresarial */
+  .legal { margin-top: 2rem; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--white); }
+  .legal dl { display: grid; grid-template-columns: minmax(150px, 240px) 1fr; }
+  .legal dt, .legal dd { padding: .95rem 1.3rem; border-bottom: 1px solid var(--line); }
+  .legal dt { font-weight: 600; background: var(--mint); }
+  .legal dd:last-of-type, .legal dt:nth-last-of-type(1) { border-bottom: 0; }
+  .note { margin-top: 1rem; font-size: .92rem; color: var(--pine-soft); }
+
+  /* Contacto */
+  .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
+  .info { list-style: none; display: grid; gap: 1.1rem; }
+  .info b { display: block; font-family: var(--head); }
+  .open { display: inline-block; margin-top: .3rem; background: var(--amber); color: var(--pine); font-weight: 600; font-size: .85rem; padding: .2rem .7rem; border-radius: 999px; }
+  form { display: grid; gap: 1rem; }
+  label { font-weight: 600; font-size: .95rem; display: grid; gap: .35rem; }
+  input, textarea {
+    font: inherit; color: var(--pine); padding: .75rem .9rem;
+    border: 2px solid var(--line); border-radius: 12px; background: var(--white); width: 100%;
+  }
+  input:focus, textarea:focus { border-color: var(--leaf); outline: none; }
+  textarea { min-height: 130px; resize: vertical; }
+
+  footer { background: var(--pine); color: var(--mint); padding: 2rem 0; font-size: .92rem; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+  @media (max-width: 800px) {
+    .hero .wrap, .about, .contact { grid-template-columns: 1fr; gap: 2rem; }
+    .capsule-stage { min-height: 220px; order: -1; }
+    .legal dl { grid-template-columns: 1fr; }
+    .legal dt { border-bottom: 0; padding-bottom: .2rem; }
+    section { padding: 3.2rem 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true"></span>Farmacia Vida Sana</a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#empresa">Tipo empresarial</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Tu salud, atendida con cuidado y sin filas largas.</h1>
+        <p>Medicamentos, asesoría farmacéutica y productos de bienestar para toda la familia, con personal que te explica cómo usar cada tratamiento.</p>
+        <div class="actions">
+          <a class="btn btn-main" href="#contacto">Escríbenos</a>
+          <a class="btn btn-alt" href="#servicios">Ver servicios</a>
+        </div>
+      </div>
+      <div class="capsule-stage" aria-hidden="true">
+        <div class="capsule">
+          <div class="half a">Vida</div>
+          <div class="half b">Sana</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="nosotros" class="alt">
+    <div class="wrap about">
+      <div>
+        <h2>Nosotros</h2>
+        <p>Somos una farmacia de barrio con estándares profesionales. Desde nuestra apertura, hemos acompañado a familias que buscan medicamentos de calidad, precios justos y una respuesta clara a sus dudas.</p>
+        <p>Nuestro equipo está dirigido por un regente de farmacia y capacitado para orientarte sobre dosis, horarios y cuidados. Cuando algo requiere valoración médica, te lo decimos.</p>
+      </div>
+      <ul class="values">
+        <li><strong>Misión</strong>Facilitar el acceso a medicamentos seguros y a información confiable sobre tu salud.</li>
+        <li><strong>Visión</strong>Ser la farmacia de confianza de nuestra comunidad por nuestro servicio y responsabilidad.</li>
+        <li><strong>Compromiso</strong>Productos con registro sanitario, cadena de frío cuando se requiere y trato respetuoso.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="servicios">
+    <div class="wrap">
+      <h2>Servicios</h2>
+      <p class="lead">Lo que puedes resolver en un solo lugar.</p>
+      <div class="services">
+        <article class="service">
+          <h3>Venta de medicamentos</h3>
+          <p>Medicamentos de venta libre y con fórmula médica, genéricos y de marca.</p>
+        </article>
+        <article class="service">
+          <h3>Asesoría farmacéutica</h3>
+          <p>Te explicamos cómo tomar tu tratamiento y qué interacciones evitar.</p>
+        </article>
+        <article class="service">
+          <h3>Inyectología</h3>
+          <p>Aplicación de inyectables con fórmula médica, con material desechable.</p>
+        </article>
+        <article class="service">
+          <h3>Toma de tensión y glucosa</h3>
+          <p>Controles rápidos para que hagas seguimiento a tu salud.</p>
+        </article>
+        <article class="service">
+          <h3>Cuidado personal y bebés</h3>
+          <p>Higiene, dermocosmética, vitaminas y productos para el cuidado infantil.</p>
+        </article>
+        <article class="service">
+          <h3>Domicilios</h3>
+          <p>Recibe tu pedido en casa. Consulta cobertura y horarios por teléfono o WhatsApp.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="empresa" class="alt">
+    <div class="wrap">
+      <h2>Tipo empresarial</h2>
+      <p class="lead">Información legal de la empresa que opera la farmacia.</p>
+      <div class="legal">
+        <dl>
+          <dt>Razón social</dt><dd>Farmacia Vida Sana S.A.S.</dd>
+          <dt>Tipo de sociedad</dt><dd>Sociedad por Acciones Simplificada (S.A.S.)</dd>
+          <dt>NIT</dt><dd>900.000.000-0</dd>
+          <dt>Actividad económica</dt><dd>Comercio al por menor de productos farmacéuticos y medicinales</dd>
+          <dt>Tamaño de empresa</dt><dd>Microempresa</dd>
+          <dt>Responsable técnico</dt><dd>Regente de farmacia con matrícula vigente</dd>
+        </dl>
+      </div>
+      <p class="note">Estos datos son de ejemplo. Reemplázalos por la información real que aparece en el certificado de existencia y representación legal.</p>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="wrap">
+      <h2>Contacto</h2>
+      <p class="lead">Consulta disponibilidad de un producto o pide tu domicilio.</p>
+      <div class="contact">
+        <ul class="info">
+          <li><b>Dirección</b>Calle 00 # 00-00, local 1</li>
+          <li><b>Teléfono</b><a href="tel:+570000000000">+57 000 000 0000</a></li>
+          <li><b>WhatsApp</b><a href="https://wa.me/570000000000">+57 000 000 0000</a></li>
+          <li><b>Correo</b><a href="mailto:contacto@vidasana.com">contacto@vidasana.com</a></li>
+          <li><b>Horario</b>Lunes a sábado, 7:00 a. m. a 9:00 p. m.<br>Domingos y festivos, 8:00 a. m. a 6:00 p. m.<br><span class="open">Atención con regente presente</span></li>
+        </ul>
+
+        <form id="form" novalidate>
+          <label>Nombre
+            <input type="text" id="nombre" name="nombre" required autocomplete="name">
+          </label>
+          <label>Teléfono o correo
+            <input type="text" id="medio" name="medio" required>
+          </label>
+          <label>Mensaje
+            <textarea id="mensaje" name="mensaje" required></textarea>
+          </label>
+          <button class="btn btn-main" type="submit">Enviar mensaje</button>
+          <p id="estado" class="note" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="anio"></span> Farmacia Vida Sana S.A.S.</span>
+    <span>Los medicamentos deben usarse bajo orientación de un profesional de la salud.</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('anio').textContent = new Date().getFullYear();
+
+  // El formulario abre el correo del visitante con el mensaje ya escrito.
+  // Para recibir mensajes directamente, conecta este formulario a un servicio como Formspree.
+  document.getElementById('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var nombre = document.getElementById('nombre').value.trim();
+    var medio = document.getElementById('medio').value.trim();
+    var mensaje = document.getElementById('mensaje').value.trim();
+    var estado = document.getElementById('estado');
+
+    if (!nombre || !medio || !mensaje) {
+      estado.textContent = 'Completa tu nombre, un medio de contacto y el mensaje.';
+      return;
+    }
+    var asunto = encodeURIComponent('Consulta de ' + nombre);
+    var cuerpo = encodeURIComponent(mensaje + '\n\nNombre: ' + nombre + '\nContacto: ' + medio);
+    window.location.href = 'mailto:contacto@vidasana.com?subject=' + asunto + '&body=' + cuerpo;
+    estado.textContent = 'Se abrió tu programa de correo para enviar el mensaje.';
+  });
+</script>
+</body>
+</html>
