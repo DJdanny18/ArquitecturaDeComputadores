@@ -117,6 +117,37 @@
   input:focus, textarea:focus { border-color: var(--leaf); outline: none; }
   textarea { min-height: 130px; resize: vertical; }
 
+
+  /* Contenido interactivo */
+  .filters { margin-top: 1.6rem; display: flex; gap: .5rem; flex-wrap: wrap; }
+  .chip { font: inherit; font-weight: 600; font-size: .95rem; color: var(--pine); background: var(--paper); border: 2px solid var(--line); border-radius: 999px; padding: .45rem 1.1rem; cursor: pointer; }
+  .chip:hover { background: var(--mint); }
+  .chip[aria-pressed="true"] { background: var(--pine); border-color: var(--pine); color: var(--white); }
+  .count { margin-top: .9rem; font-size: .92rem; color: var(--pine-soft); }
+  .tips { margin-top: 1.4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.1rem; align-items: start; }
+  .tip { background: var(--paper); border: 2px solid var(--line); border-radius: 18px; transition: border-color .2s, background .2s; }
+  .tip[hidden] { display: none; }
+  .tip.open { border-color: var(--leaf); background: var(--white); }
+  .tip-btn { all: unset; box-sizing: border-box; display: grid; grid-template-columns: 56px 1fr; gap: .2rem 1rem; align-items: center; width: 100%; padding: 1.2rem 1.3rem; cursor: pointer; border-radius: 16px; }
+  .tip-btn:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+  .tip-icon { grid-row: 1 / span 3; width: 56px; height: 56px; border-radius: 16px; background: var(--mint); display: grid; place-items: center; transition: background .2s, color .2s; }
+  .tip-icon svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .tip.open .tip-icon { background: var(--leaf); color: var(--white); }
+  .tip-cat { font-size: .85rem; font-weight: 600; color: var(--leaf); }
+  .tip-title { font-family: var(--head); font-weight: 700; font-size: 1.15rem; line-height: 1.2; }
+  .tip-more { font-size: .9rem; font-weight: 600; color: var(--pine-soft); }
+  .tip-more::after { content: "Ver consejos"; }
+  .tip.open .tip-more::after { content: "Ocultar"; }
+  .tip-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+  .tip.open .tip-body { grid-template-rows: 1fr; }
+  .tip-body > div { overflow: hidden; }
+  .tip-body p { padding: 0 1.3rem; color: var(--pine-soft); font-size: .98rem; }
+  .tip-body ul { list-style: none; padding: .8rem 1.3rem 1.3rem; display: grid; gap: .6rem; }
+  .tip-body li { position: relative; padding-left: 1.5rem; font-size: .98rem; }
+  .tip-body li::before { content: ""; position: absolute; left: 0; top: .5em; width: 10px; height: 10px; border-radius: 50%; background: var(--leaf); }
+  .tip-body .warn { margin: 0 1.3rem 1.3rem; padding: .7rem 1rem; background: #fdf1d6; border-radius: 12px; color: var(--pine); font-size: .92rem; }
+  .tip-body ul + .warn { margin-top: -.3rem; }
+
   footer { background: var(--pine); color: var(--mint); padding: 2rem 0; font-size: .92rem; }
   footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
@@ -127,7 +158,7 @@
     .legal dt { border-bottom: 0; padding-bottom: .2rem; }
     section { padding: 3.2rem 0; }
   }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .tip-body, .tip, .tip-icon { transition: none; } }
 </style>
 </head>
 <body>
@@ -139,6 +170,7 @@
       <ul>
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#contenido">Contenido</a></li>
         <li><a href="#empresa">Tipo empresarial</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
@@ -214,7 +246,47 @@
     </div>
   </section>
 
-  <section id="empresa" class="alt">
+  <section id="contenido" class="alt">
+    <div class="wrap">
+      <h2>Contenido</h2>
+      <p class="lead">Guías breves de nuestro equipo para cuidar tu salud y la de tu familia. Elige un tema y ábrelo.</p>
+      <div class="filters" role="group" aria-label="Filtrar contenido">
+        <button class="chip" type="button" data-filter="todos" aria-pressed="true">Todos</button>
+        <button class="chip" type="button" data-filter="medicamentos" aria-pressed="false">Medicamentos</button>
+        <button class="chip" type="button" data-filter="control" aria-pressed="false">Control</button>
+        <button class="chip" type="button" data-filter="familia" aria-pressed="false">Familia</button>
+      </div>
+      <p class="count" id="conteo" role="status"></p>
+      <div class="tips">
+        <article class="tip" data-cat="medicamentos">
+          <button class="tip-btn" type="button" aria-expanded="false" aria-controls="t1"><span class="tip-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="8.5" width="19" height="7" rx="3.5" transform="rotate(-40 12 12)"/><path d="M8.6 8.6l6.8 6.8"/></svg></span><span class="tip-cat">Medicamentos</span><span class="tip-title">Cómo tomar bien tus medicamentos</span><span class="tip-more"></span></button>
+          <div class="tip-body" id="t1"><div><p>Seguir la fórmula al pie de la letra es lo que hace que el tratamiento funcione.</p><ul><li>Respeta la dosis y el horario que indicó tu médico, aunque te sientas mejor.</li><li>Pregunta si debes tomarlo con comida o en ayunas.</li><li>Nunca compartas tus medicamentos ni cambies la dosis por tu cuenta.</li></ul><p class="warn">Si olvidas una dosis, no tomes doble. Consúltanos qué hacer según el medicamento.</p></div></div>
+        </article>
+        <article class="tip" data-cat="medicamentos">
+          <button class="tip-btn" type="button" aria-expanded="false" aria-controls="t2"><span class="tip-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M12 10.5v6M9 13.5h6"/></svg></span><span class="tip-cat">Medicamentos</span><span class="tip-title">Botiquín básico del hogar</span><span class="tip-more"></span></button>
+          <div class="tip-body" id="t2"><div><p>Tener lo esencial a la mano ayuda a resolver molestias leves y actuar a tiempo.</p><ul><li>Incluye gasas, antiséptico, curas, termómetro y suero oral.</li><li>Guárdalo en un lugar fresco, seco y fuera del alcance de los niños.</li><li>Revisa las fechas de vencimiento cada seis meses y descarta lo vencido.</li></ul></div></div>
+        </article>
+        <article class="tip" data-cat="control">
+          <button class="tip-btn" type="button" aria-expanded="false" aria-controls="t3"><span class="tip-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/><path d="M6.5 13h3l1.5-2.5 2 4 1.5-1.5h3"/></svg></span><span class="tip-cat">Control</span><span class="tip-title">Presión arterial</span><span class="tip-more"></span></button>
+          <div class="tip-body" id="t3"><div><p>Medirla con regularidad permite detectar cambios antes de que den síntomas.</p><ul><li>Siéntate y descansa cinco minutos antes de tomarla.</li><li>Mide siempre a la misma hora y con el brazo apoyado a la altura del corazón.</li><li>Anota los valores y llévalos a tu cita médica.</li></ul><p class="warn">Si tienes dolor de cabeza fuerte, mareo o dolor en el pecho, busca atención médica.</p></div></div>
+        </article>
+        <article class="tip" data-cat="control">
+          <button class="tip-btn" type="button" aria-expanded="false" aria-controls="t4"><span class="tip-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5s6 6.4 6 10.5a6 6 0 0 1-12 0c0-4.100 6-10.500 6-10.500z"/><path d="M9.200 14.500a3 3 0 0 0 2.300 2.300"/></svg></span><span class="tip-cat">Control</span><span class="tip-title">Glucosa en sangre</span><span class="tip-more"></span></button>
+          <div class="tip-body" id="t4"><div><p>El seguimiento frecuente ayuda a entender cómo responde tu cuerpo a la comida y al tratamiento.</p><ul><li>Lávate y sécate bien las manos antes de la toma.</li><li>Registra el valor junto con la hora y si fue en ayunas o después de comer.</li><li>Consulta a tu médico si tus cifras están fuera del rango que te indicó.</li></ul></div></div>
+        </article>
+        <article class="tip" data-cat="familia">
+          <button class="tip-btn" type="button" aria-expanded="false" aria-controls="t5"><span class="tip-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12.500" r="8"/><path d="M9 5.200c1-1.300 4-2.300 5.500-.4M9 11v.5M15 11v.5M9.500 15c1.500 1.500 3.500 1.500 5 0"/></svg></span><span class="tip-cat">Familia</span><span class="tip-title">Cuidado de bebés</span><span class="tip-more"></span></button>
+          <div class="tip-body" id="t5"><div><p>Los productos para los más pequeños requieren una elección cuidadosa.</p><ul><li>Usa productos de higiene formulados para bebés y sin fragancias fuertes.</li><li>Da medicamentos infantiles solo con indicación médica y mide la dosis con el dosificador.</li><li>Ante fiebre en menores de tres meses, consulta de inmediato.</li></ul></div></div>
+        </article>
+        <article class="tip" data-cat="familia">
+          <button class="tip-btn" type="button" aria-expanded="false" aria-controls="t6"><span class="tip-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.500v2.500M12 19v2.500M2.500 12H5M19 12h2.500M5.300 5.300l1.800 1.800M16.900 16.900l1.800 1.800M5.300 18.700l1.800-1.800M16.900 7.100l1.800-1.800"/></svg></span><span class="tip-cat">Familia</span><span class="tip-title">Protección solar</span><span class="tip-more"></span></button>
+          <div class="tip-body" id="t6"><div><p>Un buen hábito diario que cuida la piel de toda la familia.</p><ul><li>Aplica el protector 20 minutos antes de salir y repite cada dos horas.</li><li>Elige un factor de protección de 30 o más con filtro de amplio espectro.</li><li>Complementa con sombrero y ropa ligera de manga larga.</li></ul></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="empresa">
     <div class="wrap">
       <h2>Tipo empresarial</h2>
       <p class="lead">Información legal de la empresa que opera la farmacia.</p>
@@ -232,7 +304,7 @@
     </div>
   </section>
 
-  <section id="contacto">
+  <section id="contacto" class="alt">
     <div class="wrap">
       <h2>Contacto</h2>
       <p class="lead">Consulta disponibilidad de un producto o pide tu domicilio.</p>
@@ -272,6 +344,35 @@
 
 <script>
   document.getElementById('anio').textContent = new Date().getFullYear();
+
+  // Contenido: filtros por tema y tarjetas que se abren y cierran.
+  (function () {
+    var tips = Array.prototype.slice.call(document.querySelectorAll('.tip'));
+    var chips = document.querySelectorAll('.chip');
+    var conteo = document.getElementById('conteo');
+
+    tips.forEach(function (tip) {
+      var btn = tip.querySelector('.tip-btn');
+      btn.addEventListener('click', function () {
+        var open = !tip.classList.contains('open');
+        tip.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', open);
+      });
+    });
+
+    function filtrar(cat) {
+      var n = 0;
+      tips.forEach(function (tip) {
+        var ver = cat === 'todos' || tip.dataset.cat === cat;
+        tip.hidden = !ver;
+        if (ver) n++;
+      });
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', c.dataset.filter === cat); });
+      conteo.textContent = 'Mostrando ' + n + ' de ' + tips.length + ' guías';
+    }
+    chips.forEach(function (c) { c.addEventListener('click', function () { filtrar(c.dataset.filter); }); });
+    filtrar('todos');
+  })();
 
   // El formulario abre el correo del visitante con el mensaje ya escrito.
   // Para recibir mensajes directamente, conecta este formulario a un servicio como Formspree.
