@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Centro de soporte | Farmacia Vida Sana</title>
+<meta name="description" content="Centro de soporte de Farmacia Vida Sana.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pine: #123b34;
+    --pine-soft: #2d5a52;
+    --leaf: #1f8a70;
+    --mint: #d9efe7;
+    --paper: #f6faf8;
+    --white: #ffffff;
+    --amber: #f2b84b;
+    --line: #cfe3db;
+    --head: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+    --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body { font-family: var(--body); color: var(--pine); background: var(--paper); line-height: 1.6; font-size: 17px; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: min(1080px, 92%); margin: 0 auto; }
+
+  /* Encabezado (igual al del resto del sitio) */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(246, 250, 248, .94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 0; flex-wrap: wrap; }
+  .brand { font-family: var(--head); font-weight: 700; font-size: 1.3rem; text-decoration: none; display: flex; align-items: center; gap: .55rem; }
+  .brand-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--leaf); position: relative; flex: none; }
+  .brand-mark::before, .brand-mark::after { content: ""; position: absolute; background: var(--white); border-radius: 2px; }
+  .brand-mark::before { width: 16px; height: 5px; left: 7px; top: 12.5px; }
+  .brand-mark::after { width: 5px; height: 16px; left: 12.5px; top: 7px; }
+  nav ul { list-style: none; display: flex; gap: .3rem; flex-wrap: wrap; }
+  nav a { display: block; padding: .45rem .9rem; border-radius: 999px; text-decoration: none; font-weight: 500; font-size: .98rem; }
+  nav a:hover { background: var(--mint); }
+  nav a[aria-current="page"] { background: var(--pine); color: var(--white); }
+
+  .btn { display: inline-block; padding: .85rem 1.5rem; border-radius: 999px; font-weight: 600; text-decoration: none; border: 2px solid var(--pine); cursor: pointer; font-family: var(--body); font-size: 1rem; }
+  .btn-main { background: var(--pine); color: var(--white); }
+  .btn-main:hover { background: var(--leaf); border-color: var(--leaf); }
+  .btn-alt { background: transparent; }
+  .btn-alt:hover { background: var(--mint); }
+
+  .hero { padding: 5rem 0 4.5rem; text-align: center; }
+  h1 { font-family: var(--head); font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -.02em; }
+  .hero p { margin: 1.2rem auto 0; max-width: 34em; color: var(--pine-soft); font-size: 1.1rem; }
+  .actions { margin-top: 2rem; display: flex; gap: .8rem; flex-wrap: wrap; justify-content: center; }
+
+  footer { background: var(--pine); color: var(--mint); padding: 2rem 0; font-size: .92rem; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>Farmacia Vida Sana</a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="mesadeayuda.html">Mesa de ayuda</a></li>
+        <li><a href="conflicto.html" aria-current="page">Centro de soporte</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <h1>Bienvenidos al centro de soporte</h1>
+      <p>Aquí puedes resolver dudas y solicitar ayuda con tus pedidos y trámites.</p>
+      <div class="actions">
+        <a class="btn btn-main" href="mesadeayuda.html">Ir a la mesa de ayuda</a>
+        <a class="btn btn-alt" href="index.html">Volver al inicio</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="anio"></span> Farmacia Vida Sana S.A.S.</span>
+    <span>Los medicamentos deben usarse bajo orientación de un profesional de la salud.</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('anio').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
